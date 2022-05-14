@@ -1,7 +1,7 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
-  name: mysite-statefulset
+  name: mysite-deplayment
   labels:
     app: mysite
 spec:
@@ -9,12 +9,15 @@ spec:
   selector:
     matchLabels:
       app: mysite
-  serviceName: mysite
   template:
     metadata:
       labels:
         app: mysite
     spec:
+      volumes:
+      - name: mysitedb
+        persistentVolumeClaim:
+          claimName: data-postgres-0
       containers:
       - name: mysite
         image: ghcr.io/victornav9/cis-92:main
@@ -38,25 +41,16 @@ spec:
         - name: DB_ENGINE
           value: "postgres"
         - name: DB_NAME
-          value: "django"
+          value: "mysitedb"
         - name: DB_USER
-          value: "django"
+          value: "mysiteuser"
         - name: DB_HOST
-          value: "172.19.176.3"
+          value: "postgres"
         - name: DB_PASSWORD
-          value: "django"
+          value: "mysitepassword"
         - name: DJANGO_ADMIN_EMAIL
           value: "test@test.test"
         - name: DJANGO_ADMIN_USERNAME
           value: "test"
         - name: DJANGO_SUPERUSER_PASSWORD
           value: "testtest"
-  volumeClaimTemplates:
-  - metadata:
-      name: mysitedb
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 1Gi

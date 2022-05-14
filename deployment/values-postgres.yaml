@@ -1,0 +1,21 @@
+# Configuration for postgres
+global:
+  postgresql:
+    auth:
+      postgresPassword: mysitepassword
+      database: mysitedb 
+      username: mysiteuser
+      password: mysitepassword
+fullnameOverride: "postgres"
+
+# GKE Autopilot requires requests and limits.
+primary:
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "500m"
+      ephemeral-storage: "100Mi"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+      ephemeral-storage: "100Mi"
