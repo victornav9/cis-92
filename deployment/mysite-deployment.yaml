@@ -30,6 +30,7 @@ spec:
           httpGet:
             path: /polls/
             port: 8000
+          initialDelaySeconds: 10
         resources:
           limits:
             cpu: 250m 

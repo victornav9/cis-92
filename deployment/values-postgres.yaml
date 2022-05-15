@@ -19,3 +19,5 @@ primary:
       memory: "512Mi"
       cpu: "500m"
       ephemeral-storage: "100Mi"
+  persistence:
+    size: 1Gi
